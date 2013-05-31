@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * CronManager
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @package    CronManager
+ * @copyright  Copyright (c) 2013 Storesco Ltd.
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @author     Attila Fabrik <fabrik85@gmail.com>
+ */
+-->
+<config>
+    <modules>
+        <CronManager>
+            <version>1.0.0</version>
+        </CronManager>
+    </modules>
+    
+     <adminhtml>
+        <layout>
+            <updates>
+                <cron_manager>
+                    <file>cron_manager.xml</file>
+                </cron_manager>
+            </updates>
+        </layout>
+    </adminhtml>
+    
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <cron_manager before="Mage_Adminhtml">CronManager_Adminhtml</cron_manager>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    
+    <global>
+        <blocks>
+            <cron_manager>
+                <class>CronManager_Block</class>
+            </cron_manager>
+        </blocks>
+        
+        <helpers>
+            <cron_manager>
+                <class>CronManager_Helper</class>
+            </cron_manager>
+        </helpers>
+        
+        <models>	
+            <cron_manager>
+                <class>CronManager_Model</class>
+                <resourceModel>cron_manager_mysql4</resourceModel>
+            </cron_manager>
+            <cron_manager_mysql4>
+                <class>CronManager_Model_Mysql4</class>
+                <entities>
+                    <plan>
+                        <table>cron_manager_plan</table>
+                    </plan>
+                    <log>
+                        <table>cron_manager_log</table>
+                    </log>
+                </entities>
+            </cron_manager_mysql4>
+        </models>
+        
+        <events>
+            <cron_manager_compare>
+                <observers>
+                    <cron_manager_observer>
+                        <type>model</type>
+                        <class>cron_manager/observer</class>
+                        <method>compare</method>
+                    </cron_manager_observer>
+                </observers>
+            </cron_manager_compare>
+        </events>
+        
+        <resource>
+            <cron_manager_setup>
+                <setup>
+                    <module>CronManager</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </cron_manager_setup>
+		
+            <cron_manager_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </cron_manager_write>
+		
+            <cron_manager_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </cron_manager_read>
+        </resource>
+    </global>
+</config>
